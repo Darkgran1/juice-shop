@@ -33,7 +33,7 @@ jobs:
 
           #------------------------------------------BLACKDUCK----------------------------------------
           blackduck_token: ${{ secrets.BLACKDUCK_API_TOKEN }}
-          blackduck_url: ${{ secrets.BLACKDUCK_URL }}
+          blackduck_url: ${{ vars.BLACKDUCK_URL }}
 
           blackduck_scan_failure_severities: 'BLOCKER,CRITICAL'
 
