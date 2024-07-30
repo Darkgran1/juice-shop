@@ -26,6 +26,7 @@ jobs:
         env:
           DETECT_PROJECT_NAME: juice-shop
           DETECT_PROJECT_VERSION_NAME: Github-pr
+          BLACKDUCK_TRUST_CERT: true
 
         
         with:
