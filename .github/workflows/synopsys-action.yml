@@ -1,0 +1,49 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+name: Black Duck Security Testing
+
+on:
+  push:
+    # At this time, it is recommended to run Polaris only on pushes to main branches
+    # Pull request analysis will be supported by Polaris in the future
+    branches: [ "master" ]
+
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Synopsys Action
+        uses: synopsys-sig/synopsys-action@v1.6.0
+        env:
+          DETECT_PROJECT_NAME: juice-shop
+          DETECT_PROJECT_VERSION_NAME: Github-pr
+
+        
+        with:
+
+          #------------------------------------------BLACKDUCK----------------------------------------
+          blackduck_token: ${{ secrets.BLACKDUCK_API_TOKEN }}
+          blackduck_url: ${{ secrets.BLACKDUCK_URL }}
+
+          blackduck_scan_failure_severities: 'BLOCKER,CRITICAL'
+
+          ### FIX PULL REQUEST CREATION: Uncomment below to enable
+          blackduck_fixpr_enabled: true
+          github_token: ${{ secrets.GITHUB_TOKEN }} # Required when Fix PRs is enabled
+          
+          ### PULL REQUEST COMMENTS: Uncomment below to enable
+          blackduck_prcomment_enabled: true 
+
+          ### SARIF report generation and upload to GitHub Adavanced Security: Uncomment below to enable
+          blackduck_reports_sarif_create: true # Create Black Duck SARIF report and upload it as artifact
+          blackduck_upload_sarif_report: true  # Upload Black Duck SARIF report in GitHub Advanced Security tab
+          
