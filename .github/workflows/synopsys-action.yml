@@ -70,6 +70,9 @@ jobs:
           #------------------------------------------BLACKDUCK----------------------------------------
           blackduck_token: ${{ secrets.BLACKDUCK_API_TOKEN }}
           blackduck_url: ${{ vars.BLACKDUCK_URL }}
+          detect_project_name: MRB-juiceshop
+          detect_project_version_name: 1.0
+
 
           blackduck_scan_failure_severities: 'BLOCKER,CRITICAL'
 
