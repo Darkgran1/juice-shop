@@ -1,0 +1,85 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+name: Black Duck Security Testing
+
+on:
+  push:
+    # At this time, it is recommended to run Polaris only on pushes to main branches
+    # Pull request analysis will be supported by Polaris in the future
+    branches: [ "master" ]
+
+  pull_request:
+    branches: [ "master" ]
+    
+env:
+  ANGULAR_CLI_VERSION: 17
+  CYCLONEDX_NPM_VERSION: '^1.12.0'
+  
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+        node-version: [21]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: "Use Node.js ${{ matrix.node-version }}"
+        uses: actions/setup-node@5e21ff4d9bc1a8cf6de233a3057d20ec6b3fb69d #v3.8.1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: "Install CLI tools"
+        run: |
+          npm install -g @angular/cli@$ANGULAR_CLI_VERSION
+          npm install -g @cyclonedx/cyclonedx-npm@$CYCLONEDX_NPM_VERSION
+          npm install -g grunt-cli
+      - name: "Set packaging options for Grunt"
+        run: |
+          if [ "$RUNNER_OS" == "Windows" ]; then
+          echo "PCKG_OS_NAME=win32" >> $GITHUB_ENV
+          elif [ "$RUNNER_OS" == "macOS" ]; then
+          echo "PCKG_OS_NAME=darwin" >> $GITHUB_ENV
+          else
+          echo "PCKG_OS_NAME=linux" >> $GITHUB_ENV
+          fi
+          echo "PCKG_CPU_ARCH=x64" >> $GITHUB_ENV
+          echo "PCKG_NODE_VERSION=${{ matrix.node-version }}" >> $GITHUB_ENV
+        shell: bash
+      - name: "Package application"
+        run: |
+          npm install --production
+          npm run package:ci
+
+      - name: Synopsys Action
+        uses: synopsys-sig/synopsys-action@v1.6.0
+        env:
+          DETECT_PROJECT_NAME: ${{ vars.BLACKDUCK_PROJECTNAME }}
+          DETECT_PROJECT_VERSION_NAME: ${{ vars.BLACKDUCK_VERSIONNAME }}
+          BLACKDUCK_TRUST_CERT: true
+        
+        with:
+
+          #------------------------------------------BLACKDUCK----------------------------------------
+          blackduck_token: ${{ secrets.BLACKDUCK_API_TOKEN }}
+          blackduck_url: ${{ vars.BLACKDUCK_URL }}
+
+          blackduck_scan_failure_severities: 'BLOCKER,CRITICAL'
+
+          ### FIX PULL REQUEST CREATION: Uncomment below to enable
+          blackduck_fixpr_enabled: true
+          github_token: ${{ secrets.GITHUB_TOKEN }} # Required when Fix PRs is enabled
+          
+          ### PULL REQUEST COMMENTS: Uncomment below to enable
+          blackduck_prcomment_enabled: true 
+
+          ### SARIF report generation and upload to GitHub Adavanced Security: Uncomment below to enable
+          blackduck_reports_sarif_create: true # Create Black Duck SARIF report and upload it as artifact
+          blackduck_upload_sarif_report: true  # Upload Black Duck SARIF report in GitHub Advanced Security tab
+          
