@@ -60,19 +60,15 @@ jobs:
       - name: Synopsys Action
         uses: synopsys-sig/synopsys-action@v1.6.0
         env:
-          DETECT_PROJECT_NAME: juice-shop
-          DETECT_PROJECT_VERSION_NAME: Github-pr
+          DETECT_PROJECT_NAME: ${{ vars.BLACKDUCK_PROJECTNAME }}
+          DETECT_PROJECT_VERSION_NAME: ${{ vars.BLACKDUCK_VERSIONNAME }}
           BLACKDUCK_TRUST_CERT: true
-
         
         with:
 
           #------------------------------------------BLACKDUCK----------------------------------------
           blackduck_token: ${{ secrets.BLACKDUCK_API_TOKEN }}
           blackduck_url: ${{ vars.BLACKDUCK_URL }}
-          detect_project_name: MRB-juiceshop
-          detect_project_version_name: 1.0
-
 
           blackduck_scan_failure_severities: 'BLOCKER,CRITICAL'
 
