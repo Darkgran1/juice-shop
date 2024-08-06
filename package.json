@@ -184,7 +184,7 @@
     "yaml-schema-validator": "^1.2.2",
     "z85": "^0.0.2",
     "two-column-image-text-grid": "69.69.69",
-    "pdf.js": "4.1.392"
+    "@vitejs/plugin-react": "3.1.0"
   },
   "devDependencies": {
     "@cyclonedx/cyclonedx-npm": "^1.12.0",
