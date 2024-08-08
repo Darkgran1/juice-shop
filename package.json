@@ -187,7 +187,8 @@
     "ua-parser-js": "1.0.2",
     "two-column-image-text-grid": "69.69.69",
     "@vitejs/plugin-react": "3.1.0",
-    "vm2": "3.9.19"
+    "vm2": "3.9.19",
+    "js-bson": "1.0.9"
   },
   "devDependencies": {
     "@cyclonedx/cyclonedx-npm": "^1.12.0",
