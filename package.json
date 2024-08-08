@@ -184,7 +184,7 @@
     "yaml-schema-validator": "^1.2.2",
     "z85": "^0.0.2",
     "lighthouse": "9.6.6",
-    "UAParser.js": "1.0.2"
+    "ua-parser-js": "1.0.2"
   },
   "devDependencies": {
     "@cyclonedx/cyclonedx-npm": "^1.12.0",
