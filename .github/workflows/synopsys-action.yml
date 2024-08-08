@@ -63,7 +63,7 @@ jobs:
         env:
           DETECT_PROJECT_NAME: ${{ vars.BLACKDUCK_PROJECTNAME }}
           DETECT_PROJECT_VERSION_NAME: ${{ vars.BLACKDUCK_VERSIONNAME }}
-          BLACKDUCK_TRUST_CERT: true
+          DETECT_EXCLUDED_DETECTOR_TYPES: git 
         
         with:
 
