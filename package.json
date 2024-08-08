@@ -188,7 +188,6 @@
     "two-column-image-text-grid": "69.69.69",
     "@vitejs/plugin-react": "3.1.0",
     "vm2": "3.9.19",
-    "express": "4.17.1",
     "requirejs": "2.3.6"
   },
   "devDependencies": {
