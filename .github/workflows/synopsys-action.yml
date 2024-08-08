@@ -7,7 +7,7 @@ name: Black Duck Security Testing
 on:
   push:
     branches: [ master ]
-  pull_request_target:
+  pull_request:
     branches: [ master ]
   workflow_dispatch:
     
@@ -17,14 +17,12 @@ env:
   
 permissions:
   pull-requests: write
-  issues: write
-  discussions: write
   
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
 
     strategy:
       matrix:
