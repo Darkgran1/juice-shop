@@ -58,7 +58,7 @@ jobs:
           npm run package:ci
 
       - name: Synopsys Action
-        uses: synopsys-sig/synopsys-action@v1.6.0
+        uses: synopsys-sig/synopsys-action@v1.11.0
         env:
           DETECT_PROJECT_NAME: ${{ vars.BLACKDUCK_PROJECTNAME }}
           DETECT_PROJECT_VERSION_NAME: ${{ vars.BLACKDUCK_VERSIONNAME }}
