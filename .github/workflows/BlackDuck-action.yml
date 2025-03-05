@@ -57,7 +57,7 @@ jobs:
           npm run package:ci
 
       - name: Black Duck Action
-        uses: synopsys-sig/synopsys-action@v1.11.0
+        uses: blackduck-inc/black-duck-security-scan@v2.0.0
         env:
           DETECT_PROJECT_NAME: ${{ vars.BLACKDUCK_PROJECTNAME }}
           DETECT_PROJECT_VERSION_NAME: ${{ vars.BLACKDUCK_VERSIONNAME }}
